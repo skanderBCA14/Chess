@@ -8,6 +8,19 @@ Class {
 	#package : 'Myg-Chess-Tests'
 }
 
+{ #category : 'assert' }
+MyPawnTest >> assertPromotionTo: aPieceClass [
+	"Move a white pawn from e7 to e8, choosing aPieceClass,
+	and check that the pawn has been replaced by a piece of that class."
+
+	| pawn |
+	pawn := self put: MyPawn white at: 'e7'.
+
+	pawn moveTo: (self squareAt: 'e8') promotingTo: aPieceClass.
+
+	self assert: (self pieceAt: 'e8') class identicalTo: aPieceClass
+]
+
 { #category : 'helpers' }
 MyPawnTest >> assertSquares: someSquares areNamed: someSquareNames [
 	"Check that someSquares are EXACTLY the squares named in someSquareNames, no square missing and no extra square, in any order"
@@ -69,6 +82,22 @@ MyPawnTest >> testBlackPawnMovesTwoSquaresDownward [
 ]
 
 { #category : 'tests' }
+MyPawnTest >> testCaptureEnPassant [
+	"Right after a black pawn moves two squares next to a white pawn,
+	the white pawn can capture it en passant."
+
+	| whitePawn blackPawn |
+	whitePawn := self put: MyPawn white at: 'e5'.
+	blackPawn := self put: MyPawn black at: 'd7'.
+	blackPawn moveTo: (self squareAt: 'd5').
+
+	whitePawn moveTo: (self squareAt: 'd6').
+
+	self assert: (self pieceAt: 'd6') identicalTo: whitePawn.
+	self assert: (self pieceAt: 'd5') isNil
+]
+
+{ #category : 'tests' }
 MyPawnTest >> testCapturesOnTheOnlyDiagonalOnTheEdgeOfTheBoard [
 	"On the left edge of the board, a pawn has only one diagonal (b5): there is nothing to its left."
 
@@ -89,6 +118,21 @@ MyPawnTest >> testCapturesOnlyDiagonally [
 	self put: MyKnight black at: 'f5'.
 
 	self assertSquares: pawn targetSquares areNamed: #( e5 d5 f5 )
+]
+
+{ #category : 'tests' }
+MyPawnTest >> testDiagonalCaptureRemovesTheCapturedPiece [
+	"After capturing on d5, the pawn stands on d5, its old square is empty and the knight is no longer on the board."
+
+	| pawn knight |
+	pawn := self put: MyPawn white at: 'e4'.
+	knight := self put: MyKnight black at: 'd5'.
+
+	pawn moveTo: (self squareAt: 'd5').
+
+	self assert: (self pieceAt: 'd5') identicalTo: pawn.
+	self assert: (self pieceAt: 'e4') isNil.
+	self deny: (board pieces includes: knight)
 ]
 
 { #category : 'tests' }
@@ -182,4 +226,32 @@ MyPawnTest >> testMoveTwoSquares [
 	pawn := self put: MyPawn white at: 'e2'.
 
 	self assertSquares: pawn targetSquares areNamed: #( e3 e4 )
+]
+
+{ #category : 'tests' }
+MyPawnTest >> testPromotionToABishop [
+	"A pawn reaching the last rank can become a bishop."
+
+	self assertPromotionTo: MyBishop
+]
+
+{ #category : 'tests' }
+MyPawnTest >> testPromotionToAKnight [
+	"A pawn reaching the last rank can become a knight."
+
+	self assertPromotionTo: MyKnight
+]
+
+{ #category : 'tests' }
+MyPawnTest >> testPromotionToAQueen [
+	"A pawn reaching the last rank can become a queen."
+
+	self assertPromotionTo: MyQueen
+]
+
+{ #category : 'tests' }
+MyPawnTest >> testPromotionToARook [
+	"A pawn reaching the last rank can become a rook."
+
+	self assertPromotionTo: MyRook
 ]
