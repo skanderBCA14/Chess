@@ -1,3 +1,11 @@
+"
+I am a pawn.
+
+I move forward, one square at a time, or two squares on my first move.
+I never jump over a piece and never capture straight ahead.
+
+My forward direction is given when I am created, up the board for a white pawn, down for a black pawn.
+"
 Class {
 	#name : 'MyPawn',
 	#superclass : 'MyPiece',
@@ -103,12 +111,9 @@ MyPawn >> renderPieceOn: aSquare [
 
 { #category : 'rendering' }
 MyPawn >> targetSquaresLegal: aBoolean [
+	"The squares the pawn can reach by advancing"
 
-	^ (self isWhite
-		   ifTrue: [ { square up } ]
-		   ifFalse: [ { square down } ]) select: [ :s |
-		  s notNil and: [
-			  s hasPiece not or: [ s contents color ~= color ] ] ]
+	^ self forwardSquares
 ]
 
 { #category : 'moves' }
