@@ -35,10 +35,32 @@ MyPawn class >> white [
 ]
 
 { #category : 'moves' }
+MyPawn >> canCaptureOn: aSquare [
+	"There is an opponent piece on aSquare"
+
+	^ aSquare notNil and: [
+		  aSquare hasPiece and: [ self isOpponentOf: aSquare contents ] ]
+]
+
+{ #category : 'moves' }
 MyPawn >> canDoubleStep [
 	"Only on the first move, and only if both squares ahead are free"
 
 	^ self isOnStartingRank and: [ self isPathFree ]
+]
+
+{ #category : 'moves' }
+MyPawn >> captureSquares [
+	"The diagonal squares where the pawn can capture an opponent piece"
+
+	^ self diagonalSquares select: [ :each | self canCaptureOn: each ]
+]
+
+{ #category : 'moves' }
+MyPawn >> diagonalSquares [
+	"The two squares diagonally in front of the pawn"
+
+	^ { self leftDiagonalSquare. self rightDiagonalSquare }
 ]
 
 { #category : 'accessing' }
@@ -90,6 +112,13 @@ MyPawn >> isPathFree [
 ]
 
 { #category : 'moves' }
+MyPawn >> leftDiagonalSquare [
+	"The square diagonally in front of the pawn, on its left"
+
+	^ square + (forwardDirection + (-1 @ 0))
+]
+
+{ #category : 'moves' }
 MyPawn >> oneSquareAhead [
 	"The square right in front of the pawn"
 
@@ -107,6 +136,13 @@ MyPawn >> oneStepAdvance [
 MyPawn >> renderPieceOn: aSquare [ 
 	
 	^ aSquare renderPawn: self
+]
+
+{ #category : 'moves' }
+MyPawn >> rightDiagonalSquare [
+	"The square diagonally in front of the pawn, on its right"
+
+	^ square + (forwardDirection + (1 @ 0))
 ]
 
 { #category : 'rendering' }

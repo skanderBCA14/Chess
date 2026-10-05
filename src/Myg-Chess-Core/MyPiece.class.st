@@ -132,6 +132,13 @@ MyPiece >> isKing [
 ]
 
 { #category : 'testing' }
+MyPiece >> isOpponentOf: aPiece [
+	"aPiece belongs to the other player"
+
+	^ aPiece color ~= color
+]
+
+{ #category : 'testing' }
 MyPiece >> isPiece [
 	
 	^ true
