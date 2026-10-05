@@ -8,7 +8,8 @@ Class {
 		'state',
 		'whiteColor',
 		'blackColor',
-		'game'
+		'game',
+		'enPassant'
 	],
 	#category : 'Myg-Chess-Core',
 	#package : 'Myg-Chess-Core'
@@ -73,6 +74,13 @@ MyChessBoard >> click: aMyChessSquare [
 	state := state clickOn: aMyChessSquare
 ]
 
+{ #category : 'en passant' }
+MyChessBoard >> enPassant [
+	"The current en passant capture, if any"
+
+	^ enPassant
+]
+
 { #category : 'accessing' }
 MyChessBoard >> game [
 
@@ -95,6 +103,7 @@ MyChessBoard >> highLightTargets: squares [
 MyChessBoard >> initialize [
 
 	super initialize.
+	self resetEnPassant .
 
 	self blackColor: Color blue.
 	self whiteColor: Color orange.
@@ -221,6 +230,13 @@ MyChessBoard >> initializeSquares [
 MyChessBoard >> pieces [
 	
 	^ children collect: [ :square | square contents ]
+]
+
+{ #category : 'en passant' }
+MyChessBoard >> resetEnPassant [
+	"No en passant capture is possible"
+
+	enPassant := MyNoEnPassant new
 ]
 
 { #category : 'accessing' }
