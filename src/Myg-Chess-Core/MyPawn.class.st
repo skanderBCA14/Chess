@@ -147,9 +147,9 @@ MyPawn >> rightDiagonalSquare [
 
 { #category : 'rendering' }
 MyPawn >> targetSquaresLegal: aBoolean [
-	"The squares the pawn can reach by advancing"
+	"The squares the pawn can reach by advancing or by capturing"
 
-	^ self forwardSquares
+	^ self forwardSquares , self captureSquares
 ]
 
 { #category : 'moves' }
