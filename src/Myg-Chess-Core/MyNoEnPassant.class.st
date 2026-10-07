@@ -15,3 +15,10 @@ MyNoEnPassant >> allowsCaptureOn: aSquare by: aPawn [
 
 	^ false
 ]
+
+{ #category : 'capturing' }
+MyNoEnPassant >> removeCapturedPawnFor: aPawn on: aSquare [
+	"No en passant capture is possible: there is nothing to remove"
+
+	^ self
+]

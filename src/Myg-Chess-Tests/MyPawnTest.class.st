@@ -72,6 +72,20 @@ MyPawnTest >> testBlackPawnCapturesDiagonallyDownward [
 ]
 
 { #category : 'tests' }
+MyPawnTest >> testBlackPawnCapturesEnPassant [
+	"Same rule for black pawn, right after a black pawn moves two squares next to a white pawn, the white pawn can capture it en passant."
+	| whitePawn blackPawn |
+	blackPawn := self put: MyPawn black at: 'd4'.
+	whitePawn := self put: MyPawn white at: 'e2'.
+	whitePawn moveTo: (self squareAt: 'e4').
+
+	blackPawn moveTo: (self squareAt: 'e3').
+
+	self assert: (self pieceAt: 'e3') identicalTo: blackPawn.
+	self assert: (self pieceAt: 'e4') isNil
+]
+
+{ #category : 'tests' }
 MyPawnTest >> testBlackPawnMovesTwoSquaresDownward [
 	"Black pawns start on rank 7 and move down the board, from e7 they can reach e6 or e5."
 
@@ -79,22 +93,6 @@ MyPawnTest >> testBlackPawnMovesTwoSquaresDownward [
 	pawn := self put: MyPawn black at: 'e7'.
 
 	self assertSquares: pawn targetSquares areNamed: #( e6 e5 )
-]
-
-{ #category : 'tests' }
-MyPawnTest >> testCaptureEnPassant [
-	"Right after a black pawn moves two squares next to a white pawn,
-	the white pawn can capture it en passant."
-
-	| whitePawn blackPawn |
-	whitePawn := self put: MyPawn white at: 'e5'.
-	blackPawn := self put: MyPawn black at: 'd7'.
-	blackPawn moveTo: (self squareAt: 'd5').
-
-	whitePawn moveTo: (self squareAt: 'd6').
-
-	self assert: (self pieceAt: 'd6') identicalTo: whitePawn.
-	self assert: (self pieceAt: 'd5') isNil
 ]
 
 { #category : 'tests' }
@@ -254,4 +252,20 @@ MyPawnTest >> testPromotionToARook [
 	"A pawn reaching the last rank can become a rook."
 
 	self assertPromotionTo: MyRook
+]
+
+{ #category : 'tests' }
+MyPawnTest >> testWhitePawnCaptureEnPassant [
+	"Right after a black pawn moves two squares next to a white pawn,
+	the white pawn can capture it en passant."
+
+	| whitePawn blackPawn |
+	whitePawn := self put: MyPawn white at: 'e5'.
+	blackPawn := self put: MyPawn black at: 'd7'.
+	blackPawn moveTo: (self squareAt: 'd5').
+
+	whitePawn moveTo: (self squareAt: 'd6').
+
+	self assert: (self pieceAt: 'd6') identicalTo: whitePawn.
+	self assert: (self pieceAt: 'd5') isNil
 ]

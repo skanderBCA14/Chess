@@ -146,6 +146,18 @@ MyPawn >> oneStepAdvance [
 	^ { self oneSquareAhead } select: [ :each | self isFree: each ]
 ]
 
+{ #category : 'moving' }
+MyPawn >> performMoveTo: aSquare [
+	"The pawn removes the pawn it captures en passant, moves like any piece
+	and leaves an en passant capture behind it"
+
+	| enPassant |
+	self board enPassant removeCapturedPawnFor: self on: aSquare.
+	enPassant := MyEnPassant pawn: self skipping: self oneSquareAhead.
+	super performMoveTo: aSquare.
+	self board enPassant: enPassant
+]
+
 { #category : 'rendering' }
 MyPawn >> renderPieceOn: aSquare [ 
 	

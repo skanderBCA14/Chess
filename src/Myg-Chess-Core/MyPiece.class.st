@@ -168,7 +168,7 @@ MyPiece >> legalTargetSquares [
 	^ self targetSquaresLegal: true
 ]
 
-{ #category : 'path commands' }
+{ #category : 'moving' }
 MyPiece >> moveTo: aSquare [
 	"Move to aSquare if the move is allowed"
 
