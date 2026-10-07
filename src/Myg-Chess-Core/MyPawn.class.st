@@ -35,11 +35,17 @@ MyPawn class >> white [
 ]
 
 { #category : 'moves' }
-MyPawn >> canCaptureOn: aSquare [
-	"There is an opponent piece on aSquare"
+MyPawn >> canCaptureEnPassantOn: aSquare [
+	"An opponent pawn has just jumped over aSquare"
 
-	^ aSquare notNil and: [
-		  aSquare hasPiece and: [ self isOpponentOf: aSquare contents ] ]
+	^ self board enPassant allowsCaptureOn: aSquare by: self
+]
+
+{ #category : 'moves' }
+MyPawn >> canCaptureOn: aSquare [
+	"The pawn can capture on aSquare: normally or en passant"
+
+	^ (self hasOpponentOn: aSquare) or: [ self canCaptureEnPassantOn: aSquare ]
 ]
 
 { #category : 'moves' }
@@ -51,7 +57,7 @@ MyPawn >> canDoubleStep [
 
 { #category : 'moves' }
 MyPawn >> captureSquares [
-	"The diagonal squares where the pawn can capture an opponent piece"
+	"The diagonal squares where the pawn can capture"
 
 	^ self diagonalSquares select: [ :each | self canCaptureOn: each ]
 ]
@@ -81,6 +87,14 @@ MyPawn >> forwardSquares [
 	"The squares straight ahead where the pawn can go"
 
 	^ self oneStepAdvance , self twoStepAdvance
+]
+
+{ #category : 'moves' }
+MyPawn >> hasOpponentOn: aSquare [
+	"There is an opponent piece on aSquare"
+
+	^ aSquare notNil and: [
+		  aSquare hasPiece and: [ self isOpponentOf: aSquare contents ] ]
 ]
 
 { #category : 'accessing' }

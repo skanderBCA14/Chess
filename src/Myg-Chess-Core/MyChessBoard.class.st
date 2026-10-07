@@ -81,6 +81,12 @@ MyChessBoard >> enPassant [
 	^ enPassant
 ]
 
+{ #category : 'en passant' }
+MyChessBoard >> enPassant: anEnPassant [
+
+	enPassant := anEnPassant
+]
+
 { #category : 'accessing' }
 MyChessBoard >> game [
 
