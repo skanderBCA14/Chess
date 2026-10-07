@@ -227,6 +227,19 @@ MyPawnTest >> testMoveTwoSquares [
 ]
 
 { #category : 'tests' }
+MyPawnTest >> testNoEnPassantAgainstAPieceThatIsNotAPawn [
+	"Only a pawn can be captured en passant, a rook moving from d7 to d5 cannot."
+
+	| whitePawn rook |
+	whitePawn := self put: MyPawn white at: 'e5'.
+	rook := self put: MyRook black at: 'd7'.
+
+	rook moveTo: (self squareAt: 'd5').
+
+	self assertSquares: whitePawn targetSquares areNamed: #( e6 )
+]
+
+{ #category : 'tests' }
 MyPawnTest >> testPromotionToABishop [
 	"A pawn reaching the last rank can become a bishop."
 
