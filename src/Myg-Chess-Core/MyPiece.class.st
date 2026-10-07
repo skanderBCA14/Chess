@@ -170,8 +170,23 @@ MyPiece >> legalTargetSquares [
 
 { #category : 'path commands' }
 MyPiece >> moveTo: aSquare [
+	"Move to aSquare if the move is allowed"
 
 	(self legalTargetSquares includes: aSquare) ifFalse: [ ^ self ].
+	self performMoveTo: aSquare
+]
+
+{ #category : 'moving' }
+MyPiece >> performMoveTo: aSquare [
+	"Move to aSquare. Any move ends the possible en passant capture."
+
+	self board resetEnPassant.
+	self placeOn: aSquare
+]
+
+{ #category : 'moving' }
+MyPiece >> placeOn: aSquare [
+	"Leave the current square and stand on aSquare, replacing the piece that was there"
 
 	square emptyContents.
 	square := aSquare.
