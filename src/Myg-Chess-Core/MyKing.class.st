@@ -27,6 +27,13 @@ MyKing >> basicTargetSquares [
 	}
 ]
 
+{ #category : 'rendering' }
+MyKing >> blackLetter [
+	"A black king is drawn with L"
+
+	^ 'L'
+]
+
 { #category : 'accessing' }
 MyKing >> id [
 	
@@ -91,4 +98,11 @@ MyKing >> targetSquaresLegal: aBoolean [
 					s contents color ~= color and: [ 
 						"Let's hope the piece is not defended"
 						threatenedSquares includes: s  ] ] ] ] ]
+]
+
+{ #category : 'rendering' }
+MyKing >> whiteLetter [
+	"A white king is drawn with K"
+
+	^ 'K'
 ]

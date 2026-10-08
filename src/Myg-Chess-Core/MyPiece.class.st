@@ -31,6 +31,13 @@ MyPiece >> attackingSquares [
 	^ self legalTargetSquares
 ]
 
+{ #category : 'rendering' }
+MyPiece >> blackLetter [
+	"The letter drawing a black piece of this kind in the chess font"
+
+	^ self subclassResponsibility
+]
+
 { #category : 'path commands' }
 MyPiece >> board [
 
@@ -264,4 +271,11 @@ MyPiece >> upRightDiagonalLegal: aBoolean [
 	^ self
 		  collectSquares: [ :aSquare | aSquare up ifNotNil: #right ]
 		  legal: aBoolean
+]
+
+{ #category : 'rendering' }
+MyPiece >> whiteLetter [
+	"The letter drawing a white piece of this kind in the chess font"
+
+	^ self subclassResponsibility
 ]

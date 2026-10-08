@@ -5,6 +5,13 @@ Class {
 	#package : 'Myg-Chess-Core'
 }
 
+{ #category : 'rendering' }
+MyBishop >> blackLetter [
+	"A black bishop is drawn with V"
+
+	^ 'V'
+]
+
 { #category : 'accessing' }
 MyBishop >> id [
 	
@@ -24,4 +31,11 @@ MyBishop >> targetSquaresLegal: aBoolean [
 	  , (self upLeftDiagonalLegal: aBoolean)
 	  , (self downRightDiagonalLegal: aBoolean)
 	  , (self downLeftDiagonalLegal: aBoolean)
+]
+
+{ #category : 'rendering' }
+MyBishop >> whiteLetter [
+	"A white bishop is drawn with B"
+
+	^ 'B'
 ]

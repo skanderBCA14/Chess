@@ -34,6 +34,13 @@ MyPawn class >> white [
 		  yourself
 ]
 
+{ #category : 'rendering' }
+MyPawn >> blackLetter [
+	"A black pawn is drawn with O"
+
+	^ 'O'
+]
+
 { #category : 'moves' }
 MyPawn >> canCaptureEnPassantOn: aSquare [
 	"An opponent pawn has just jumped over aSquare"
@@ -229,4 +236,11 @@ MyPawn >> twoStepAdvance [
 	"The square two steps ahead, if the pawn can make its double step"
 
 	^ { self twoSquaresAhead } select: [ :each | self canDoubleStep ]
+]
+
+{ #category : 'rendering' }
+MyPawn >> whiteLetter [
+	"A white pawn is drawn with P"
+
+	^ 'P'
 ]

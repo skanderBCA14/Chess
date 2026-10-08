@@ -5,6 +5,13 @@ Class {
 	#package : 'Myg-Chess-Core'
 }
 
+{ #category : 'rendering' }
+MyRook >> blackLetter [
+	"A black rook is drawn with T"
+
+	^ 'T'
+]
+
 { #category : 'accessing' }
 MyRook >> id [
 	^ 'R'
@@ -27,4 +34,11 @@ MyRook >> targetSquaresLegal: aBoolean [
 
 	^ (self upFileLegal: aBoolean) , (self downFileLegal: aBoolean)
 	  , (self leftFileLegal: aBoolean) , (self rightFileLegal: aBoolean)
+]
+
+{ #category : 'rendering' }
+MyRook >> whiteLetter [
+	"A white rook is drawn with R"
+
+	^ 'R'
 ]

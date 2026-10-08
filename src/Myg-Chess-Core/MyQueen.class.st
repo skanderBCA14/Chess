@@ -6,6 +6,13 @@ Class {
 }
 
 { #category : 'rendering' }
+MyQueen >> blackLetter [
+	"A black queen is drawn with W"
+
+	^ 'W'
+]
+
+{ #category : 'rendering' }
 MyQueen >> renderPieceOn: aSquare [
 
 	^ aSquare renderQueen: self
@@ -24,4 +31,11 @@ MyQueen >> targetSquaresLegal: aBoolean [
 	             , (self leftFileLegal: aBoolean)
 	             , (self rightFileLegal: aBoolean).
 	^ likeABishop , likeARook
+]
+
+{ #category : 'rendering' }
+MyQueen >> whiteLetter [
+	"A white queen is drawn with Q"
+
+	^ 'Q'
 ]
