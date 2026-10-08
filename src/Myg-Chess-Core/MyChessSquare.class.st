@@ -176,6 +176,15 @@ MyChessSquare >> left [
 	^ self + (-1 @ 0)
 ]
 
+{ #category : 'rendering' }
+MyChessSquare >> letterFormatters [
+	"How a letter is written on this square, for each square color"
+
+	^ {
+		  (Color white -> [ :aLetter | aLetter ]).
+		  (Color black -> [ :aLetter | aLetter asLowercase ]) } asDictionary
+]
+
 { #category : 'accessing' }
 MyChessSquare >> name [
 	^ name
@@ -237,6 +246,13 @@ MyChessSquare >> renderKnight: aPiece [
 			  color isBlack
 				  ifFalse: [ 'N' ]
 				  ifTrue: [ 'n' ] ]
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderLetter: aLetter [
+	"The letter as written on this square"
+
+	^ (self letterFormatters at: color) value: aLetter
 ]
 
 { #category : 'rendering' }

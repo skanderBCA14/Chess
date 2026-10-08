@@ -175,6 +175,22 @@ MyPiece >> legalTargetSquares [
 	^ self targetSquaresLegal: true
 ]
 
+{ #category : 'rendering' }
+MyPiece >> letter [
+	"The letter drawing the receiver, chosen by its color"
+
+	^ self letters at: color
+]
+
+{ #category : 'rendering' }
+MyPiece >> letters [
+	"The letter of this kind of piece for each color"
+
+	^ {
+		  (Color white -> self whiteLetter).
+		  (Color black -> self blackLetter) } asDictionary
+]
+
 { #category : 'moving' }
 MyPiece >> moveTo: aSquare [
 	"Move to aSquare if the move is allowed"
