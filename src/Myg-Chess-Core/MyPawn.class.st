@@ -111,6 +111,13 @@ MyPawn >> isFree: aSquare [
 ]
 
 { #category : 'testing' }
+MyPawn >> isOnLastRank [
+	"There is no square in front of the pawn: it reached the end of the board"
+
+	^ self oneSquareAhead isNil
+]
+
+{ #category : 'testing' }
 MyPawn >> isOnStartingRank [
 	"A pawn never moves backward, so it is on its starting rank
 	when the square two steps behind it is outside the board."
@@ -130,6 +137,23 @@ MyPawn >> leftDiagonalSquare [
 	"The square diagonally in front of the pawn, on its left"
 
 	^ square + (forwardDirection + (-1 @ 0))
+]
+
+{ #category : 'promotion' }
+MyPawn >> moveTo: aSquare promotingTo: aPieceClass [
+	"Move to aSquare, then become a piece of aPieceClass if the pawn reached the last rank"
+
+	self moveTo: aSquare.
+	self promoteTo: aPieceClass
+]
+
+{ #category : 'promotion' }
+MyPawn >> newPieceOf: aPieceClass [
+	"A new piece of aPieceClass, with the color of the pawn"
+
+	^ aPieceClass new
+		  color: color;
+		  yourself
 ]
 
 { #category : 'moves' }
@@ -156,6 +180,21 @@ MyPawn >> performMoveTo: aSquare [
 	enPassant := MyEnPassant pawn: self skipping: self oneSquareAhead.
 	super performMoveTo: aSquare.
 	self board enPassant: enPassant
+]
+
+{ #category : 'promotion' }
+MyPawn >> promoteTo: aPieceClass [
+	"On the last rank, the pawn is replaced by a new piece of aPieceClass"
+
+	self promotionSquares do: [ :each |
+		self board at: each name put: (self newPieceOf: aPieceClass) ]
+]
+
+{ #category : 'promotion' }
+MyPawn >> promotionSquares [
+	"The square of the pawn if it reached the last rank, otherwise nothing"
+
+	^ { square } select: [ :each | self isOnLastRank ]
 ]
 
 { #category : 'rendering' }
