@@ -217,6 +217,13 @@ MyPiece >> placeOn: aSquare [
 ]
 
 { #category : 'rendering' }
+MyPiece >> renderPieceOn: aSquare [
+	"The receiver as written on aSquare"
+
+	^ aSquare renderLetter: self letter
+]
+
+{ #category : 'rendering' }
 MyPiece >> rightFile [
 
 	^ self rightFileLegal: false

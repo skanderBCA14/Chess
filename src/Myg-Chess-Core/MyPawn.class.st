@@ -204,12 +204,6 @@ MyPawn >> promotionSquares [
 	^ { square } select: [ :each | self isOnLastRank ]
 ]
 
-{ #category : 'rendering' }
-MyPawn >> renderPieceOn: aSquare [ 
-	
-	^ aSquare renderPawn: self
-]
-
 { #category : 'moves' }
 MyPawn >> rightDiagonalSquare [
 	"The square diagonally in front of the pawn, on its right"

@@ -19,12 +19,6 @@ MyKnight >> id [
 ]
 
 { #category : 'rendering' }
-MyKnight >> renderPieceOn: aSquare [
-
-	^ aSquare renderKnight: self
-]
-
-{ #category : 'rendering' }
 MyKnight >> targetSquaresLegal: aBoolean [
 
 	^ {

@@ -13,12 +13,6 @@ MyQueen >> blackLetter [
 ]
 
 { #category : 'rendering' }
-MyQueen >> renderPieceOn: aSquare [
-
-	^ aSquare renderQueen: self
-]
-
-{ #category : 'rendering' }
 MyQueen >> targetSquaresLegal: aBoolean [
 
 	| likeABishop likeARook |

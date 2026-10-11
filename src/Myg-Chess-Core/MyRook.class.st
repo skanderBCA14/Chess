@@ -18,12 +18,6 @@ MyRook >> id [
 ]
 
 { #category : 'rendering' }
-MyRook >> renderPieceOn: aSquare [
-
-	^ aSquare renderRook: self
-]
-
-{ #category : 'rendering' }
 MyRook >> targetSquares [
 
 	^ self upFile , self downFile , self leftFile , self rightFile
