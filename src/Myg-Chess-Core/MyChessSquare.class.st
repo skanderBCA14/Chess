@@ -115,6 +115,22 @@ MyChessSquare >> emptyContents [
 	self contents: nil
 ]
 
+{ #category : 'rendering' }
+MyChessSquare >> emptyLetter [
+	"The letter drawing the receiver when it is empty"
+
+	^ self emptyLetters at: color
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> emptyLetters [
+	"The letter of an empty square for each square color"
+
+	^ {
+		  (Color white -> 'z').
+		  (Color black -> 'x') } asDictionary
+]
+
 { #category : 'accessing' }
 MyChessSquare >> file [
 	
