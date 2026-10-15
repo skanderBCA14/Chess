@@ -13,18 +13,9 @@ MyKing >> attackingSquares [
 
 { #category : 'rendering' }
 MyKing >> basicTargetSquares [
+	"The squares around the king, only inside the board"
 
-	"The king can move one square on each direction including diagonals"
-	^ {
-		square ifNotNil: #right.
-		square up ifNotNil: #right.
-		square ifNotNil: #up.
-		square up ifNotNil: #left.
-		square ifNotNil: #left.
-		square left ifNotNil: #down.
-		square ifNotNil: #down.
-		square down ifNotNil: #right
-	}
+	^ self steps flatCollect: [ :each | square squaresAt: each ]
 ]
 
 { #category : 'rendering' }
@@ -77,21 +68,27 @@ MyKing >> opponentPieces [
 ]
 
 { #category : 'rendering' }
+MyKing >> steps [
+	"The offsets of a king move: one square in every direction"
+
+	^ { 1 @ 0. 1 @ 1. 0 @ 1. -1 @ 1. -1 @ 0. -1 @ -1. 0 @ -1. 1 @ -1 }
+]
+
+{ #category : 'rendering' }
 MyKing >> targetSquaresLegal: aBoolean [
 	"The king cannot move to threatened squares"
 
 	| threatenedSquares |
-	threatenedSquares := self opponentPieces flatCollect: [ :e |
-		                     e attackingSquares ].
+	threatenedSquares := self opponentPieces flatCollect: [ :each |
+		                     each attackingSquares ].
 
 	^ self basicTargetSquares select: [ :s |
-		  s notNil and: [
-			  (threatenedSquares includes: s) not and: [
-				  s hasPiece not or: [ 
-					"The square has an opponent piece"
-					s contents color ~= color and: [ 
-						"Let's hope the piece is not defended"
-						threatenedSquares includes: s  ] ] ] ] ]
+		  (threatenedSquares includes: s) not and: [
+			  s hasPiece not or: [
+				  "The square has an opponent piece"
+				  s contents color ~= color and: [
+					  "Let's hope the piece is not defended"
+					  threatenedSquares includes: s ] ] ] ]
 ]
 
 { #category : 'rendering' }

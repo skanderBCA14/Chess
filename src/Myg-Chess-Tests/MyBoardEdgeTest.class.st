@@ -68,6 +68,30 @@ MyBoardEdgeTest >> testKnightMovesFromTheOppositeCorner [
 ]
 
 { #category : 'tests' }
+MyBoardEdgeTest >> testQueenLegalMovesStopAtPieces [
+
+	| queen |
+	board at: 'd4' put: (queen := MyQueen white).
+	board at: 'd6' put: MyPawn white.
+	board at: 'f6' put: MyPawn black.
+
+	self
+		assertSquares: queen legalTargetSquares
+		areNamed: #( d5 d3 d2 d1 c4 b4 a4 e4 f4 g4 h4 e5 f6 c5 b6 a7 e3 f2 g1 c3 b2 a1 )
+]
+
+{ #category : 'tests' }
+MyBoardEdgeTest >> testQueenMovesFromACorner [
+
+	| queen |
+	board at: 'a1' put: (queen := MyQueen white).
+
+	self
+		assertSquares: queen targetSquares
+		areNamed: #( a2 a3 a4 a5 a6 a7 a8 b1 c1 d1 e1 f1 g1 h1 b2 c3 d4 e5 f6 g7 h8 )
+]
+
+{ #category : 'tests' }
 MyBoardEdgeTest >> testRookMovesFromACorner [
 
 	| rook |
