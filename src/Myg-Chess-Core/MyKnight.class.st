@@ -19,19 +19,25 @@ MyKnight >> id [
 ]
 
 { #category : 'rendering' }
-MyKnight >> targetSquaresLegal: aBoolean [
+MyKnight >> jumpSquares [
+	"The squares the knight can jump to, only inside the board"
 
-	^ {
-		  (square right ifNotNil: [ :p | p right ifNotNil: #up ]).
-		  (square right ifNotNil: [ :p | p right ifNotNil: #down ]).
-		  (square left ifNotNil: [ :p | p left ifNotNil: #up ]).
-		  (square left ifNotNil: [ :p | p left ifNotNil: #down ]).
-		  (square up ifNotNil: [ :p | p up ifNotNil: #left ]).
-		  (square up ifNotNil: [ :p | p up ifNotNil: #right ]).
-		  (square down ifNotNil: [ :p | p down ifNotNil: #left ]).
-		  (square down ifNotNil: [ :p | p down ifNotNil: #right ]) }
-		  select: [ :s |
-			  s notNil and: [ s hasPiece not or: [ s contents color ~= color ] ] ]
+	^ self jumps flatCollect: [ :each | square squaresAt: each ]
+]
+
+{ #category : 'rendering' }
+MyKnight >> jumps [
+	"The offsets of a knight move: two squares in one direction and one in the other"
+
+	^ { 1 @ 2. 2 @ 1. 2 @ -1. 1 @ -2. -1 @ -2. -2 @ -1. -2 @ 1. -1 @ 2 }
+]
+
+{ #category : 'rendering' }
+MyKnight >> targetSquaresLegal: aBoolean [
+	"The squares the knight can jump to, empty or held by an opponent"
+
+	^ self jumpSquares select: [ :each |
+		  each hasPiece not or: [ self isOpponentOf: each contents ] ]
 ]
 
 { #category : 'rendering' }

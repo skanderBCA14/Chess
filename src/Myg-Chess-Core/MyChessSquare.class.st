@@ -211,6 +211,14 @@ MyChessSquare >> name: aString [
 	label text: (name asRopedText foreground: color negated)
 ]
 
+{ #category : 'accessing' }
+MyChessSquare >> nameAt: anOffset [
+	"The name of the square at anOffset from the receiver, even outside the board"
+
+	^ (self column asciiValue + anOffset x) asCharacter asString
+	  , (self file asciiValue + anOffset y) asCharacter asString
+]
+
 { #category : 'printing' }
 MyChessSquare >> printOn: aStream [
 	"Generate a string representation of the receiver based on its instance variables."
@@ -238,6 +246,13 @@ MyChessSquare >> right [
 MyChessSquare >> select [
 	
 	self border: Color green
+]
+
+{ #category : 'accessing' }
+MyChessSquare >> squaresAt: anOffset [
+	"The square at anOffset from the receiver, or nothing when it is outside the board"
+
+	^ board squaresNamed: (self nameAt: anOffset)
 ]
 
 { #category : 'highlighting' }

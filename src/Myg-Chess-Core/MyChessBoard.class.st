@@ -258,6 +258,13 @@ MyChessBoard >> selected: aMyChessSquare [
 	selected := aMyChessSquare
 ]
 
+{ #category : 'accessing' }
+MyChessBoard >> squaresNamed: aName [
+	"The square named aName, or nothing when there is no such square"
+
+	^ grid at: aName ifPresent: [ :square | { square } ] ifAbsent: [ #() ]
+]
+
 { #category : 'highlighting' }
 MyChessBoard >> unhighLightTargets: squares [
 

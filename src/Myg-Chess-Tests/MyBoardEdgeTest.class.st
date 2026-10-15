@@ -74,3 +74,17 @@ MyBoardEdgeTest >> testRookMovesFromACorner [
 	board at: 'a1' put: (rook := MyRook white).
 	self assertSquares: rook targetSquares areNamed: #( a2 a3 a4 a5 a6 a7 a8 b1 c1 d1 e1 f1 g1 h1 )
 ]
+
+{ #category : 'tests' }
+MyBoardEdgeTest >> testSquaresAtInsideTheBoard [
+
+	self
+		assert: ((board at: 'd4') squaresAt: 1 @ 2) asArray
+		equals: { board at: 'e6' }
+]
+
+{ #category : 'tests' }
+MyBoardEdgeTest >> testSquaresAtOutsideTheBoard [
+
+	self assert: ((board at: 'a1') squaresAt: -1 @ 0) isEmpty
+]
