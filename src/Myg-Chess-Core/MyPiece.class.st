@@ -74,6 +74,21 @@ MyPiece >> collectSquares: collectBlock while: untilBlock [
 	^ targets
 ]
 
+{ #category : 'rendering' }
+MyPiece >> collectSquaresToward: aDirection legal: shouldBeLegal [
+	"The squares reached by sliding toward aDirection, only inside the board"
+
+	| targets next |
+	targets := OrderedCollection new.
+	next := square squaresAt: aDirection.
+	[ next anySatisfy: [ :each | shouldBeLegal ==> each hasPiece not ] ]
+		whileTrue: [
+			targets addAll: next.
+			next := next flatCollect: [ :each | each squaresAt: aDirection ] ].
+	targets addAll: (next select: [ :each | self isOpponentOf: each contents ]).
+	^ targets
+]
+
 { #category : 'accessing' }
 MyPiece >> color [
 
@@ -84,6 +99,13 @@ MyPiece >> color [
 MyPiece >> color: aColor [
 
 	color := aColor
+]
+
+{ #category : 'directions' }
+MyPiece >> diagonalDirections [
+	"The four diagonals"
+
+	^ { 1 @ 1. -1 @ 1. 1 @ -1. -1 @ -1 }
 ]
 
 { #category : 'rendering' }
@@ -189,6 +211,13 @@ MyPiece >> letters [
 	^ {
 		  (Color white -> self whiteLetter).
 		  (Color black -> self blackLetter) } asDictionary
+]
+
+{ #category : 'directions' }
+MyPiece >> lineDirections [
+	"Up, down, left and right"
+
+	^ { 0 @ 1. 0 @ -1. -1 @ 0. 1 @ 0 }
 ]
 
 { #category : 'moving' }

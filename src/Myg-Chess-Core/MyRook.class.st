@@ -25,9 +25,10 @@ MyRook >> targetSquares [
 
 { #category : 'rendering' }
 MyRook >> targetSquaresLegal: aBoolean [
+	"The rook slides along the lines"
 
-	^ (self upFileLegal: aBoolean) , (self downFileLegal: aBoolean)
-	  , (self leftFileLegal: aBoolean) , (self rightFileLegal: aBoolean)
+	^ self lineDirections flatCollect: [ :each |
+		  self collectSquaresToward: each legal: aBoolean ]
 ]
 
 { #category : 'rendering' }

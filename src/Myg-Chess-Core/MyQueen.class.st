@@ -14,17 +14,10 @@ MyQueen >> blackLetter [
 
 { #category : 'rendering' }
 MyQueen >> targetSquaresLegal: aBoolean [
+	"The queen slides along the lines like a rook and along the diagonals like a bishop"
 
-	| likeABishop likeARook |
-	likeABishop := (self upRightDiagonalLegal: aBoolean)
-	               , (self upLeftDiagonalLegal: aBoolean)
-	               , (self downRightDiagonalLegal: aBoolean)
-	               , (self downLeftDiagonalLegal: aBoolean).
-	likeARook := (self upFileLegal: aBoolean)
-	             , (self downFileLegal: aBoolean)
-	             , (self leftFileLegal: aBoolean)
-	             , (self rightFileLegal: aBoolean).
-	^ likeABishop , likeARook
+	^ (self lineDirections , self diagonalDirections) flatCollect: [ :each |
+		  self collectSquaresToward: each legal: aBoolean ]
 ]
 
 { #category : 'rendering' }

@@ -20,11 +20,10 @@ MyBishop >> id [
 
 { #category : 'rendering' }
 MyBishop >> targetSquaresLegal: aBoolean [
+	"The bishop slides along the diagonals"
 
-	^ (self upRightDiagonalLegal: aBoolean)
-	  , (self upLeftDiagonalLegal: aBoolean)
-	  , (self downRightDiagonalLegal: aBoolean)
-	  , (self downLeftDiagonalLegal: aBoolean)
+	^ self diagonalDirections flatCollect: [ :each |
+		  self collectSquaresToward: each legal: aBoolean ]
 ]
 
 { #category : 'rendering' }
