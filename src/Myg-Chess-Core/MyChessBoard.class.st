@@ -101,8 +101,9 @@ MyChessBoard >> game: aGame [
 
 { #category : 'highlighting' }
 MyChessBoard >> highLightTargets: squares [
+	"Show the squares the selected piece can reach"
 
-	squares do: [ :sq | sq ifNotNil: #highlightTarget ]
+	squares do: [ :each | each highlightTarget ]
 ]
 
 { #category : 'initialization' }
@@ -267,8 +268,9 @@ MyChessBoard >> squaresNamed: aName [
 
 { #category : 'highlighting' }
 MyChessBoard >> unhighLightTargets: squares [
+	"Stop showing the squares the selected piece could reach"
 
-	squares do: [ :sq | sq ifNotNil: #unhighlightTarget ]
+	squares do: [ :each | each unhighlightTarget ]
 ]
 
 { #category : 'selection' }

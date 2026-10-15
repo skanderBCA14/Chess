@@ -98,12 +98,6 @@ MyChessSquare >> contents: aPiece [
 			 fontName: MyOpenChessDownloadedFont new familyName)
 ]
 
-{ #category : 'api - configuration' }
-MyChessSquare >> down [
-
-	^ self + (0 @ -1)
-]
-
 { #category : 'asd' }
 MyChessSquare >> emptyContents [
 	"Remove the piece from the receiver"
@@ -184,12 +178,6 @@ MyChessSquare >> initialize [
 	contents := MyNoPiece new
 ]
 
-{ #category : 'accessing' }
-MyChessSquare >> left [
-
-	^ self + (-1 @ 0)
-]
-
 { #category : 'rendering' }
 MyChessSquare >> letterFormatters [
 	"How a letter is written on this square, for each square color"
@@ -236,12 +224,6 @@ MyChessSquare >> renderLetter: aLetter [
 	^ (self letterFormatters at: color) value: aLetter
 ]
 
-{ #category : 'accessing' }
-MyChessSquare >> right [
-	
-	^ self + (1@0)
-]
-
 { #category : 'initialization' }
 MyChessSquare >> select [
 	
@@ -265,10 +247,4 @@ MyChessSquare >> unhighlightTarget [
 MyChessSquare >> unselect [
 
 	self border: BlBorder empty
-]
-
-{ #category : 'instance creation' }
-MyChessSquare >> up [
-	
-	^ self + (0@1)
 ]
