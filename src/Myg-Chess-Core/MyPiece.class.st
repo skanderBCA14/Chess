@@ -13,7 +13,7 @@ Class {
 MyPiece class >> black [
 
 	^ self new
-		  color: Color black;
+		  color: ColorBlack default;
 		  yourself
 ]
 
@@ -21,7 +21,7 @@ MyPiece class >> black [
 MyPiece class >> white [
 
 	^ self new
-		  color: Color white;
+		  color: ColorWhite default;
 		  yourself
 ]
 
@@ -119,16 +119,7 @@ MyPiece >> legalTargetSquares [
 MyPiece >> letter [
 	"The letter drawing the receiver, chosen by its color"
 
-	^ self letters at: color
-]
-
-{ #category : 'rendering' }
-MyPiece >> letters [
-	"The letter of this kind of piece for each color"
-
-	^ {
-		  (Color white -> self whiteLetter).
-		  (Color black -> self blackLetter) } asDictionary
+	^ color letterOf: self
 ]
 
 { #category : 'directions' }

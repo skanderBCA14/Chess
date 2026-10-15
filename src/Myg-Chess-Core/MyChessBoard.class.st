@@ -160,14 +160,14 @@ MyChessBoard >> initializePieces [
 				          ifTrue: [
 					          black := false.
 					          MyChessSquare basicNew
-						          color: Color black;
+						          color: ColorBlack default;
 						          board: self;
 						          initialize;
 						          yourself ]
 				          ifFalse: [
 					          black := true.
 					          MyChessSquare basicNew
-						          color: Color white;
+						          color: ColorWhite default;
 						          board: self;
 						          initialize;
 						          yourself ].
@@ -214,7 +214,7 @@ MyChessBoard >> initializeSquares [
 				          ifTrue: [
 					          black := false.
 					          MyChessSquare basicNew
-						          color: Color black;
+						          color: ColorBlack default;
 						          board: self;
 						          initialize;
 						          emptyContents;
@@ -222,7 +222,7 @@ MyChessBoard >> initializeSquares [
 				          ifFalse: [
 					          black := true.
 					          MyChessSquare basicNew
-						          color: Color white;
+						          color: ColorWhite default;
 						          board: self;
 						          initialize;
 						          emptyContents;

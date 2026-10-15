@@ -17,7 +17,7 @@ Class {
 { #category : 'api - text weight' }
 MyChessSquare class >> black [
 
-	^ self color: Color black
+	^ self color: ColorBlack default
 ]
 
 { #category : 'api - text weight' }
@@ -32,7 +32,7 @@ MyChessSquare class >> color: aColor [
 { #category : 'api - text weight' }
 MyChessSquare class >> white [
 
-	^ self color: Color white
+	^ self color: ColorWhite default
 ]
 
 { #category : 'arithmetic' }
@@ -109,16 +109,7 @@ MyChessSquare >> emptyContents [
 MyChessSquare >> emptyLetter [
 	"The letter drawing the receiver when it is empty"
 
-	^ self emptyLetters at: color
-]
-
-{ #category : 'rendering' }
-MyChessSquare >> emptyLetters [
-	"The letter of an empty square for each square color"
-
-	^ {
-		  (Color white -> 'z').
-		  (Color black -> 'x') } asDictionary
+	^ color emptyLetter
 ]
 
 { #category : 'accessing' }
@@ -178,15 +169,6 @@ MyChessSquare >> initialize [
 	contents := MyNoPiece new
 ]
 
-{ #category : 'rendering' }
-MyChessSquare >> letterFormatters [
-	"How a letter is written on this square, for each square color"
-
-	^ {
-		  (Color white -> [ :aLetter | aLetter ]).
-		  (Color black -> [ :aLetter | aLetter asLowercase ]) } asDictionary
-]
-
 { #category : 'accessing' }
 MyChessSquare >> name [
 	^ name
@@ -221,7 +203,7 @@ MyChessSquare >> printOn: aStream [
 MyChessSquare >> renderLetter: aLetter [
 	"The letter as written on this square"
 
-	^ (self letterFormatters at: color) value: aLetter
+	^ color write: aLetter
 ]
 
 { #category : 'initialization' }
