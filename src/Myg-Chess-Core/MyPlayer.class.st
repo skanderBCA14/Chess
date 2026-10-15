@@ -53,8 +53,9 @@ MyPlayer >> king [
 
 { #category : 'accessing' }
 MyPlayer >> pieces [
+	"The pieces of the receiver's color"
 
-	^ game pieces select: [ :p | p notNil and: [ p color = self color ] ]
+	^ game pieces select: [ :each | each color = self color ]
 ]
 
 { #category : 'playing' }
