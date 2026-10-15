@@ -18,12 +18,6 @@ MyRook >> id [
 ]
 
 { #category : 'rendering' }
-MyRook >> targetSquares [
-
-	^ self upFile , self downFile , self leftFile , self rightFile
-]
-
-{ #category : 'rendering' }
 MyRook >> targetSquaresLegal: aBoolean [
 	"The rook slides along the lines"
 

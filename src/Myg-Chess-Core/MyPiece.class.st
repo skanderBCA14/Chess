@@ -45,36 +45,6 @@ MyPiece >> board [
 ]
 
 { #category : 'rendering' }
-MyPiece >> collectSquares: aBlock [
-
-	^ self collectSquares: aBlock legal: false
-]
-
-{ #category : 'rendering' }
-MyPiece >> collectSquares: aBlock legal: shouldBeLegal [
-
-	^ self collectSquares: aBlock while: [ :aSquare |
-		  aSquare notNil and: [ shouldBeLegal ==> aSquare hasPiece not ] ]
-]
-
-{ #category : 'rendering' }
-MyPiece >> collectSquares: collectBlock while: untilBlock [
-
-	| targets next |
-	targets := OrderedCollection new.
-
-	"Collect up right"
-	next := square.
-	[ untilBlock value: (next := collectBlock value: next) ]
-		whileTrue: [ targets add: next ].
-
-	"If we can it the next piece, then add it too"
-	(next notNil and: [ next contents color ~= color ]) ifTrue: [ targets add: next ].
-
-	^ targets
-]
-
-{ #category : 'rendering' }
 MyPiece >> collectSquaresToward: aDirection legal: shouldBeLegal [
 	"The squares reached by sliding toward aDirection, only inside the board"
 
@@ -108,46 +78,6 @@ MyPiece >> diagonalDirections [
 	^ { 1 @ 1. -1 @ 1. 1 @ -1. -1 @ -1 }
 ]
 
-{ #category : 'rendering' }
-MyPiece >> downFile [
-
-	^ self downFileLegal: false
-]
-
-{ #category : 'rendering' }
-MyPiece >> downFileLegal: aBoolean [
-
-	^ self collectSquares: [ :aSquare | aSquare down ] legal: aBoolean
-]
-
-{ #category : 'rendering' }
-MyPiece >> downLeftDiagonal [
-
-	^ self downLeftDiagonalLegal: false
-]
-
-{ #category : 'rendering' }
-MyPiece >> downLeftDiagonalLegal: aBoolean [
-
-	^ self
-		  collectSquares: [ :aSquare | aSquare down ifNotNil: #left ]
-		  legal: aBoolean
-]
-
-{ #category : 'rendering' }
-MyPiece >> downRightDiagonal [
-
-	^ self downRightDiagonalLegal: false
-]
-
-{ #category : 'rendering' }
-MyPiece >> downRightDiagonalLegal: aBoolean [
-
-	^ self
-		  collectSquares: [ :aSquare | aSquare down ifNotNil: #right ]
-		  legal: aBoolean
-]
-
 { #category : 'accessing' }
 MyPiece >> id [
 
@@ -177,18 +107,6 @@ MyPiece >> isPiece [
 MyPiece >> isWhite [
 	
 	^ color isBlack not
-]
-
-{ #category : 'rendering' }
-MyPiece >> leftFile [
-
-	^ self leftFileLegal: false
-]
-
-{ #category : 'rendering' }
-MyPiece >> leftFileLegal: aBoolean [
-
-	^ self collectSquares: [ :aSquare | aSquare left ] legal: aBoolean
 ]
 
 { #category : 'path commands' }
@@ -259,18 +177,6 @@ MyPiece >> renderPieceOn: aSquare [
 	^ aSquare renderLetter: self letter
 ]
 
-{ #category : 'rendering' }
-MyPiece >> rightFile [
-
-	^ self rightFileLegal: false
-]
-
-{ #category : 'rendering' }
-MyPiece >> rightFileLegal: aBoolean [
-
-	^ self collectSquares: [ :aSquare | aSquare right ] legal: aBoolean
-]
-
 { #category : 'accessing' }
 MyPiece >> square [
 	^ square
@@ -292,44 +198,6 @@ MyPiece >> targetSquares [
 MyPiece >> targetSquaresLegal: aBoolean [
 
 	self subclassResponsibility
-]
-
-{ #category : 'rendering' }
-MyPiece >> upFile [
-
-	^ self upFileLegal: false
-]
-
-{ #category : 'rendering' }
-MyPiece >> upFileLegal: aBoolean [
-
-	^ self collectSquares: [ :aSquare | aSquare up ] legal: aBoolean
-]
-
-{ #category : 'rendering' }
-MyPiece >> upLeftDiagonal [
-
-	^ self upLeftDiagonalLegal: false
-]
-
-{ #category : 'rendering' }
-MyPiece >> upLeftDiagonalLegal: aBoolean [
-
-	^ self collectSquares: [ :aSquare | aSquare up ifNotNil: #left ] legal: aBoolean
-]
-
-{ #category : 'rendering' }
-MyPiece >> upRightDiagonal [
-
-	^ self upRightDiagonalLegal: false
-]
-
-{ #category : 'rendering' }
-MyPiece >> upRightDiagonalLegal: aBoolean [
-
-	^ self
-		  collectSquares: [ :aSquare | aSquare up ifNotNil: #right ]
-		  legal: aBoolean
 ]
 
 { #category : 'rendering' }
