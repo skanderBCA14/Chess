@@ -70,10 +70,17 @@ MyPawn >> captureSquares [
 ]
 
 { #category : 'moves' }
-MyPawn >> diagonalSquares [
-	"The two squares diagonally in front of the pawn"
+MyPawn >> diagonalOffsets [
+	"The two diagonal steps in front of the pawn"
 
-	^ { self leftDiagonalSquare. self rightDiagonalSquare }
+	^ { forwardDirection + (-1 @ 0). forwardDirection + (1 @ 0) }
+]
+
+{ #category : 'moves' }
+MyPawn >> diagonalSquares [
+	"The squares diagonally in front of the pawn, only inside the board"
+
+	^ self diagonalOffsets flatCollect: [ :each | square squaresAt: each ]
 ]
 
 { #category : 'accessing' }
@@ -100,8 +107,7 @@ MyPawn >> forwardSquares [
 MyPawn >> hasOpponentOn: aSquare [
 	"There is an opponent piece on aSquare"
 
-	^ aSquare notNil and: [
-		  aSquare hasPiece and: [ self isOpponentOf: aSquare contents ] ]
+	^ aSquare hasPiece and: [ self isOpponentOf: aSquare contents ]
 ]
 
 { #category : 'accessing' }
@@ -112,16 +118,16 @@ MyPawn >> id [
 
 { #category : 'moves' }
 MyPawn >> isFree: aSquare [
-	"A pawn only advances onto an existing, empty square: it never captures forward"
+	"A pawn only advances onto an empty square: it never captures forward"
 
-	^ aSquare notNil and: [ aSquare hasPiece not ]
+	^ aSquare hasPiece not
 ]
 
 { #category : 'testing' }
 MyPawn >> isOnLastRank [
 	"There is no square in front of the pawn: it reached the end of the board"
 
-	^ self oneSquareAhead isNil
+	^ (self squaresAhead: 1) isEmpty
 ]
 
 { #category : 'testing' }
@@ -129,21 +135,14 @@ MyPawn >> isOnStartingRank [
 	"A pawn never moves backward, so it is on its starting rank
 	when the square two steps behind it is outside the board."
 
-	^ (square + (forwardDirection * -2)) isNil
+	^ (self squaresAhead: -2) isEmpty
 ]
 
 { #category : 'moves' }
 MyPawn >> isPathFree [
 	"Both squares ahead are free, the pawn never jumps over a piece"
 
-	^ (self isFree: self oneSquareAhead) and: [ self isFree: self twoSquaresAhead ]
-]
-
-{ #category : 'moves' }
-MyPawn >> leftDiagonalSquare [
-	"The square diagonally in front of the pawn, on its left"
-
-	^ square + (forwardDirection + (-1 @ 0))
+	^ self pathSquares allSatisfy: [ :each | self isFree: each ]
 ]
 
 { #category : 'promotion' }
@@ -174,7 +173,14 @@ MyPawn >> oneSquareAhead [
 MyPawn >> oneStepAdvance [
 	"The square right ahead, if it is free"
 
-	^ { self oneSquareAhead } select: [ :each | self isFree: each ]
+	^ (self squaresAhead: 1) select: [ :each | self isFree: each ]
+]
+
+{ #category : 'moves' }
+MyPawn >> pathSquares [
+	"The two squares in front of the pawn"
+
+	^ (self squaresAhead: 1) , (self squaresAhead: 2)
 ]
 
 { #category : 'moving' }
@@ -205,10 +211,10 @@ MyPawn >> promotionSquares [
 ]
 
 { #category : 'moves' }
-MyPawn >> rightDiagonalSquare [
-	"The square diagonally in front of the pawn, on its right"
+MyPawn >> squaresAhead: aNumber [
+	"The square aNumber steps in front of the pawn, or nothing outside the board"
 
-	^ square + (forwardDirection + (1 @ 0))
+	^ square squaresAt: forwardDirection * aNumber
 ]
 
 { #category : 'rendering' }
@@ -219,17 +225,10 @@ MyPawn >> targetSquaresLegal: aBoolean [
 ]
 
 { #category : 'moves' }
-MyPawn >> twoSquaresAhead [
-	"The square two steps in front of the pawn"
-
-	^ square + (forwardDirection * 2)
-]
-
-{ #category : 'moves' }
 MyPawn >> twoStepAdvance [
 	"The square two steps ahead, if the pawn can make its double step"
 
-	^ { self twoSquaresAhead } select: [ :each | self canDoubleStep ]
+	^ (self squaresAhead: 2) select: [ :each | self canDoubleStep ]
 ]
 
 { #category : 'rendering' }
