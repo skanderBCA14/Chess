@@ -15,6 +15,13 @@ MyNoPiece >> isPiece [
 	^ false
 ]
 
+{ #category : 'moving' }
+MyNoPiece >> moveIn: aGame to: aSquare [
+	"An empty square has nothing to move"
+
+	^ self
+]
+
 { #category : 'rendering' }
 MyNoPiece >> renderPieceOn: aSquare [
 	"An empty square is drawn with its own letter"

@@ -192,6 +192,13 @@ MyPiece >> letters [
 ]
 
 { #category : 'moving' }
+MyPiece >> moveIn: aGame to: aSquare [
+	"Ask aGame to move the receiver to aSquare"
+
+	aGame move: self to: aSquare
+]
+
+{ #category : 'moving' }
 MyPiece >> moveTo: aSquare [
 	"Move to aSquare if the move is allowed"
 
