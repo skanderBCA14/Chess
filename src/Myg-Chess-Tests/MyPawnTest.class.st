@@ -82,7 +82,7 @@ MyPawnTest >> testBlackPawnCapturesEnPassant [
 	blackPawn moveTo: (self squareAt: 'e3').
 
 	self assert: (self pieceAt: 'e3') identicalTo: blackPawn.
-	self assert: (self pieceAt: 'e4') isNil
+	self deny: (self squareAt: 'e4') hasPiece
 ]
 
 { #category : 'tests' }
@@ -129,7 +129,7 @@ MyPawnTest >> testDiagonalCaptureRemovesTheCapturedPiece [
 	pawn moveTo: (self squareAt: 'd5').
 
 	self assert: (self pieceAt: 'd5') identicalTo: pawn.
-	self assert: (self pieceAt: 'e4') isNil.
+	self deny: (self squareAt: 'e4') hasPiece.
 	self deny: (board pieces includes: knight)
 ]
 
@@ -280,5 +280,5 @@ MyPawnTest >> testWhitePawnCaptureEnPassant [
 	whitePawn moveTo: (self squareAt: 'd6').
 
 	self assert: (self pieceAt: 'd6') identicalTo: whitePawn.
-	self assert: (self pieceAt: 'd5') isNil
+	self deny: (self squareAt: 'd5') hasPiece
 ]

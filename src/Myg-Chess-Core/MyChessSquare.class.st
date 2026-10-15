@@ -111,8 +111,9 @@ MyChessSquare >> down [
 
 { #category : 'asd' }
 MyChessSquare >> emptyContents [
-	
-	self contents: nil
+	"Remove the piece from the receiver"
+
+	self contents: MyNoPiece new
 ]
 
 { #category : 'rendering' }
@@ -147,8 +148,9 @@ MyChessSquare >> foreground [
 
 { #category : 'testing' }
 MyChessSquare >> hasPiece [
-	
-	^ contents isNil not
+	"Ask the content whether it is a real piece"
+
+	^ contents isPiece
 ]
 
 { #category : 'highlighting' }
@@ -183,7 +185,8 @@ MyChessSquare >> initialize [
 		background: Color white;
 		geometry: BlSquareGeometry new.
 
-	self addEventHandlerOn: BlClickEvent do: [ :e | self click ]
+	self addEventHandlerOn: BlClickEvent do: [ :e | self click ].
+	contents := MyNoPiece new
 ]
 
 { #category : 'accessing' }
