@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'color',
-		'game'
+		'game',
+		'strategy'
 	],
 	#category : 'Myg-Chess-Core',
 	#package : 'Myg-Chess-Core'
@@ -39,6 +40,13 @@ MyPlayer >> game: anObject [
 	game := anObject
 ]
 
+{ #category : 'initialization' }
+MyPlayer >> initialize [
+
+	super initialize.
+	strategy := MyRandomStrategy new
+]
+
 { #category : 'testing' }
 MyPlayer >> isWhite [
 	
@@ -51,6 +59,20 @@ MyPlayer >> king [
 	^ self pieces detect: [ :p | p isKing ]
 ]
 
+{ #category : 'playing' }
+MyPlayer >> movablePieces [
+	"Only the king can move when it is in check, otherwise every piece"
+
+	^ self pieces select: [ :each | each isKing or: [ self king isInCheck not ] ]
+]
+
+{ #category : 'playing' }
+MyPlayer >> movesOf: aPiece [
+	"The legal moves of aPiece"
+
+	^ aPiece legalTargetSquares collect: [ :each | MyMove piece: aPiece to: each ]
+]
+
 { #category : 'accessing' }
 MyPlayer >> pieces [
 	"The pieces of the receiver's color"
@@ -60,23 +82,26 @@ MyPlayer >> pieces [
 
 { #category : 'playing' }
 MyPlayer >> play [
+	"Play the move chosen by the strategy"
 
-	| pieces |
-	pieces := self king isInCheck
-		          ifTrue: [ OrderedCollection with: self king ]
-		          ifFalse: [ self pieces copy asOrderedCollection ].
+	| moves |
+	moves := self possibleMoves.
+	moves ifEmpty: [ ^ self error: 'No moves available' ].
+	(strategy chooseAmong: moves) playIn: game
+]
 
+{ #category : 'playing' }
+MyPlayer >> possibleMoves [
+	"Every legal move of the pieces that can move"
 
-	[ pieces notEmpty ] whileTrue: [
-		| piece legalMoves |
-		piece := pieces atRandom.
-		pieces remove: piece.
-		legalMoves := piece legalTargetSquares.
-		legalMoves ifNotEmpty: [
-			game move: piece to: legalMoves atRandom.
-			^ self ] ].
+	^ self movablePieces flatCollect: [ :each | self movesOf: each ]
+]
 
-	self halt: 'NO MOVES AVAILABLE!'
+{ #category : 'accessing' }
+MyPlayer >> strategy: aStrategy [
+	"Choose how the player chooses its moves"
+
+	strategy := aStrategy
 ]
 
 { #category : 'constants' }
